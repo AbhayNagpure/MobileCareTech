@@ -3,8 +3,10 @@ import axios from 'axios';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, SlidersHorizontal, PackageOpen } from "lucide-react";
+import { useLanguage } from '../components/LanguageProvider';
 
 const Store = () => {
+  const { t } = useLanguage();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,8 +56,8 @@ const Store = () => {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Our Store</h1>
-          <p className="text-sm text-muted-foreground mt-1">Find the best certified devices and accessories</p>
+          <h1 className="text-3xl font-extrabold text-foreground tracking-tight">{t('store', 'title')}</h1>
+          <p className="text-sm text-muted-foreground mt-1">{t('store', 'subtitle')}</p>
         </div>
 
         {/* Search Bar */}
@@ -65,7 +67,7 @@ const Store = () => {
           </div>
           <input
             type="text"
-            placeholder="Search phones, brands..."
+            placeholder={t('store', 'searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2 bg-muted/50 border border-border/50 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
@@ -99,20 +101,20 @@ const Store = () => {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-r-2 border-blue-600"></div>
-          <p className="text-sm text-muted-foreground animate-pulse">Loading inventory...</p>
+          <p className="text-sm text-muted-foreground animate-pulse">{t('store', 'loading')}</p>
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center px-4 bg-muted/20 rounded-3xl border border-dashed border-border/50">
           <PackageOpen className="w-16 h-16 text-muted-foreground/50 mb-4" />
-          <h3 className="text-lg font-semibold text-foreground">No products found</h3>
+          <h3 className="text-lg font-semibold text-foreground">{t('store', 'noProducts')}</h3>
           <p className="text-sm text-muted-foreground max-w-sm mt-1">
-            We couldn't find any items matching your search. Try adjusting your filters or check back later!
+            {t('store', 'noProductsDesc')}
           </p>
           <button 
             onClick={() => {setSearchQuery(''); setActiveCategory('All');}}
             className="mt-6 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
           >
-            Clear all filters
+            {t('store', 'clearFilters')}
           </button>
         </div>
       ) : (
@@ -131,7 +133,7 @@ const Store = () => {
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground/40">
                     <PackageOpen className="w-8 h-8 mb-2" />
-                    <span className="text-[10px] font-medium uppercase tracking-wider">No Image</span>
+                    <span className="text-[10px] font-medium uppercase tracking-wider">{t('store', 'noImage')}</span>
                   </div>
                 )}
                 
@@ -168,11 +170,11 @@ const Store = () => {
                   
                   {product.stock > 0 ? (
                     <div className="text-[9px] sm:text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-900/20 px-1.5 py-0.5 rounded-md">
-                      {product.stock} left
+                      {product.stock} {t('store', 'left')}
                     </div>
                   ) : (
                     <div className="text-[9px] sm:text-[10px] text-red-600 dark:text-red-400 font-bold bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded-md">
-                      Out of stock
+                      {t('store', 'outOfStock')}
                     </div>
                   )}
                 </div>
@@ -186,7 +188,7 @@ const Store = () => {
                   rel="noreferrer"
                   className="w-full py-2 bg-foreground text-background hover:bg-foreground/90 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-transform active:scale-95 shadow-sm"
                 >
-                  Buy via WhatsApp
+                  {t('store', 'buyWhatsApp')}
                 </a>
               </div>
             </Card>
