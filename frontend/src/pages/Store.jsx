@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { productService } from '../services/productService';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Search, SlidersHorizontal, PackageOpen } from "lucide-react";
 import { useLanguage } from '../components/LanguageProvider';
-import { config } from '../config';
+import ProductCard from '../components/store/ProductCard';
 
 const Store = () => {
   const { t } = useLanguage();
@@ -23,7 +22,7 @@ const Store = () => {
   };
   const categories = Object.keys(categoryMap);
 
-  const { data, isLoading: loading } = useQuery({
+  const { data, isLoading: loading, isError } = useQuery({
     queryKey: ['products', { category: categoryMap[activeCategory], search: searchQuery, page, excludeCategory: 'REPAIR' }],
     queryFn: () => productService.getAllProducts({
       category: categoryMap[activeCategory],
@@ -86,9 +85,34 @@ const Store = () => {
 
       {/* Products Grid */}
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-r-2 border-blue-600"></div>
-          <p className="text-sm text-muted-foreground animate-pulse">{t('store', 'loading')}</p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={i} className="flex flex-col overflow-hidden shadow-sm bg-card rounded-[2rem] h-[340px]">
+              <Skeleton className="w-full h-48 sm:h-56 rounded-none" />
+              <div className="p-5 flex-grow flex flex-col gap-2">
+                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-full mt-1" />
+                <div className="mt-auto pt-2 flex items-end justify-between">
+                  <Skeleton className="h-5 w-16" />
+                  <Skeleton className="h-4 w-12" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : isError ? (
+        <div className="flex flex-col items-center justify-center py-20 text-center px-4 bg-red-50 dark:bg-red-900/10 rounded-3xl border border-red-100 dark:border-red-900/30">
+          <h3 className="text-lg font-semibold text-red-600 dark:text-red-400">Failed to load products</h3>
+          <p className="text-sm text-red-500/80 max-w-sm mt-1">
+            We couldn't connect to the server. Please check your internet connection or try again later.
+          </p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-6 text-sm font-medium text-white bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full transition-colors"
+          >
+            Retry
+          </button>
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center px-4 bg-muted/20 rounded-3xl border border-dashed border-border/50">
@@ -108,78 +132,7 @@ const Store = () => {
         <>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {filteredProducts.map((product) => (
-            <Card key={product._id} className="flex flex-col overflow-hidden border border-border/60 shadow-sm hover:shadow-md transition-all duration-300 group bg-card rounded-2xl">
-              
-              {/* Image Container (Frameless) */}
-              <div className="relative h-48 sm:h-56 overflow-hidden flex items-center justify-center p-1 md:p-2 mt-2">
-                {product.imageUrls && product.imageUrls[0] ? (
-                  <img 
-                    src={product.imageUrls[0]} 
-                    alt={product.name} 
-                    className="w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-500 ease-out"
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground/40">
-                    <PackageOpen className="w-8 h-8 mb-2" />
-                    <span className="text-[10px] font-medium uppercase tracking-wider">{t('store', 'noImage')}</span>
-                  </div>
-                )}
-                
-                {/* Condition Badge */}
-                <div className="absolute top-0 left-0">
-                  <Badge className="bg-background/95 text-foreground shadow-sm text-[9px] sm:text-[10px] font-bold border-none px-2.5 py-0.5 rounded-tl-none rounded-tr-xl rounded-br-xl rounded-bl-none border-r border-b border-border/50">
-                    {product.condition || 'Used'}
-                  </Badge>
-                </div>
-              </div>
-              
-              {/* Details Container */}
-              <div className="p-3 flex-grow flex flex-col gap-1">
-                <div className="flex justify-between items-start">
-                  <div className="text-[9px] sm:text-[10px] text-muted-foreground font-bold tracking-wider uppercase">
-                    {product.brand || product.category || 'Device'}
-                  </div>
-                </div>
-                
-                <h3 className="text-xs sm:text-sm font-bold leading-tight line-clamp-2 text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {product.name}
-                </h3>
-
-                {product.description && (
-                  <p className="text-[10px] sm:text-xs text-muted-foreground line-clamp-2 mt-0.5 leading-snug">
-                    {product.description}
-                  </p>
-                )}
-                
-                <div className="mt-auto pt-2 flex items-end justify-between">
-                  <div className="text-base sm:text-lg font-black text-blue-600 dark:text-blue-400 leading-none">
-                    ₹{product.price ? product.price.toLocaleString('en-IN') : 'N/A'}
-                  </div>
-                  
-                  {product.stock > 0 ? (
-                    <div className="text-[9px] sm:text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-900/20 px-1.5 py-0.5 rounded-md">
-                      {product.stock} {t('store', 'left')}
-                    </div>
-                  ) : (
-                    <div className="text-[9px] sm:text-[10px] text-red-600 dark:text-red-400 font-bold bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded-md">
-                      {t('store', 'outOfStock')}
-                    </div>
-                  )}
-                </div>
-              </div>
-              
-              {/* Button */}
-              <div className="p-3 pt-0 mt-1">
-                <a 
-                  href={`https://wa.me/${config.whatsappNumber}?text=Hi, I'm interested in buying:%0A%0A*${encodeURIComponent(product.name)}*%0A💰 Price: ₹${product.price ? product.price.toLocaleString('en-IN') : 'N/A'}%0A🏷️ Condition: ${product.condition || 'Used'}%0A%0AIs this available?`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-2 bg-foreground text-background hover:bg-foreground/90 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-transform active:scale-95 shadow-sm"
-                >
-                  {t('store', 'buyWhatsApp')}
-                </a>
-              </div>
-            </Card>
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
 
