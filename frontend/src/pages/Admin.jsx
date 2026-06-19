@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { productService } from '../services/productService';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import InventoryList from '../components/admin/InventoryList';
@@ -27,10 +27,9 @@ const Admin = () => {
   const fetchProducts = async () => {
     try {
       setIsLoadingProducts(true);
-      const response = await axios.get('/api/v1/products'); 
-      const fetchedData = response.data.data || response.data.products || response.data;
-      if (Array.isArray(fetchedData)) {
-        setProducts(fetchedData);
+      const data = await productService.getAllProducts({ limit: 1000 }); 
+      if (data && Array.isArray(data.products)) {
+        setProducts(data.products);
       } else {
         setProducts([]);
       }
@@ -47,7 +46,7 @@ const Admin = () => {
   const handleDelete = async (productId) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`/api/v1/products/${productId}`, { withCredentials: true });
+      await productService.deleteProduct(productId);
       toast.success('Product deleted successfully!');
       setProducts(products.filter(p => p._id !== productId)); 
     } catch (error) {
@@ -137,11 +136,11 @@ const Admin = () => {
       }
 
       if (editingId) {
-        await axios.put(`/api/v1/products/${editingId}`, payload, { withCredentials: true });
+        await productService.updateProduct(editingId, payload);
         toast.success('Product updated successfully!');
         setEditingId(null);
       } else {
-        await axios.post('/api/v1/products', payload, { withCredentials: true });
+        await productService.createProduct(payload);
         toast.success('Product created successfully!');
       }
       

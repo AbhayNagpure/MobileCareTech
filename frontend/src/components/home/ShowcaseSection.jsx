@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { productService } from '../../services/productService';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../LanguageProvider';
 
@@ -37,30 +38,26 @@ const ShowcaseSection = () => {
     return () => clearInterval(timer);
   }, [displayRepairs.length]);
 
+  const { data } = useQuery({
+    queryKey: ['showcaseRepairs'],
+    queryFn: () => productService.getAllProducts({ category: 'REPAIR', limit: 10 })
+  });
+
   useEffect(() => {
-    const fetchRepairs = async () => {
-      try {
-        const response = await axios.get('/api/v1/products');
-        const data = response.data.data || response.data.products || response.data;
-        if (Array.isArray(data)) {
-          const validRepairs = data
-            .filter(p => p.category === 'REPAIR' && p.imageUrls && p.imageUrls.length >= 2)
-            .map(p => ({
-              title: p.name,
-              issue: p.description || "Repair Service",
-              before: p.imageUrls[0],
-              after: p.imageUrls[1]
-            }));
-          if (validRepairs.length > 0) {
-            setFetchedRepairs(validRepairs);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch repairs:", error);
+    if (data?.products && data.products.length > 0) {
+      const validRepairs = data.products
+        .filter(p => p.imageUrls && p.imageUrls.length >= 2)
+        .map(p => ({
+          title: p.name,
+          issue: p.description || "Repair Service",
+          before: p.imageUrls[0],
+          after: p.imageUrls[1]
+        }));
+      if (validRepairs.length > 0) {
+        setFetchedRepairs(validRepairs);
       }
-    };
-    fetchRepairs();
-  }, []);
+    }
+  }, [data]);
 
   return (
     <section className="min-h-screen py-24 px-4 bg-background transition-colors duration-300 flex flex-col justify-center overflow-hidden">

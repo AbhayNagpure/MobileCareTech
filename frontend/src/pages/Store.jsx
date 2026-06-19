@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { productService } from '../services/productService';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, SlidersHorizontal, PackageOpen } from "lucide-react";
 import { useLanguage } from '../components/LanguageProvider';
+import { config } from '../config';
 
 const Store = () => {
   const { t } = useLanguage();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [page, setPage] = useState(1);
 
   // Map UI category names to Backend DB values (Repairs are excluded as they go to Home page)
   const categoryMap = {
@@ -22,33 +23,19 @@ const Store = () => {
   };
   const categories = Object.keys(categoryMap);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('/api/v1/products');
-        // Exclude 'REPAIR' category from the store completely
-        const storeProducts = response.data.data.filter(p => p.category !== 'REPAIR');
-        setProducts(storeProducts);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  // Filter products based on search and category
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          product.brand?.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const dbCategory = categoryMap[activeCategory];
-    const matchesCategory = activeCategory === 'All' || (product.category && product.category.toUpperCase() === dbCategory);
-    
-    return matchesSearch && matchesCategory;
+  const { data, isLoading: loading } = useQuery({
+    queryKey: ['products', { category: categoryMap[activeCategory], search: searchQuery, page, excludeCategory: 'REPAIR' }],
+    queryFn: () => productService.getAllProducts({
+      category: categoryMap[activeCategory],
+      search: searchQuery,
+      page,
+      limit: 10,
+      excludeCategory: 'REPAIR'
+    }),
   });
+
+  const filteredProducts = data?.products || [];
+  const pagination = data?.pagination;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -111,14 +98,15 @@ const Store = () => {
             {t('store', 'noProductsDesc')}
           </p>
           <button 
-            onClick={() => {setSearchQuery(''); setActiveCategory('All');}}
+            onClick={() => {setSearchQuery(''); setActiveCategory('All'); setPage(1);}}
             className="mt-6 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
           >
             {t('store', 'clearFilters')}
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
+        <>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {filteredProducts.map((product) => (
             <Card key={product._id} className="flex flex-col overflow-hidden border border-border/60 shadow-sm hover:shadow-md transition-all duration-300 group bg-card rounded-2xl">
               
@@ -183,7 +171,7 @@ const Store = () => {
               {/* Button */}
               <div className="p-3 pt-0 mt-1">
                 <a 
-                  href={`https://wa.me/917477090100?text=Hi, I'm interested in buying:%0A%0A*${encodeURIComponent(product.name)}*%0A💰 Price: ₹${product.price ? product.price.toLocaleString('en-IN') : 'N/A'}%0A🏷️ Condition: ${product.condition || 'Used'}%0A%0AIs this available?`}
+                  href={`https://wa.me/${config.whatsappNumber}?text=Hi, I'm interested in buying:%0A%0A*${encodeURIComponent(product.name)}*%0A💰 Price: ₹${product.price ? product.price.toLocaleString('en-IN') : 'N/A'}%0A🏷️ Condition: ${product.condition || 'Used'}%0A%0AIs this available?`}
                   target="_blank"
                   rel="noreferrer"
                   className="w-full py-2 bg-foreground text-background hover:bg-foreground/90 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-transform active:scale-95 shadow-sm"
@@ -194,6 +182,30 @@ const Store = () => {
             </Card>
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        {pagination && pagination.pages > 1 && (
+          <div className="flex justify-center items-center gap-4 mt-10">
+            <button
+              disabled={page === 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              className="px-4 py-2 border border-border/60 rounded-xl disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="text-sm text-muted-foreground font-medium">
+              Page {page} of {pagination.pages}
+            </span>
+            <button
+              disabled={page === pagination.pages}
+              onClick={() => setPage((p) => p + 1)}
+              className="px-4 py-2 border border-border/60 rounded-xl disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
+        </>
       )}
     </div>
   );
