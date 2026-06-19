@@ -11,19 +11,42 @@ export const createProduct = asyncHandler(async (req, res) => {
 })
 
 export const getAllProducts = asyncHandler(async (req, res) => {
-    //we only wants to show available products to public only.
-    let query = {isAvailable: true};
+    let query = { isAvailable: true };
     
-    if(req.query.category){
+    if (req.query.category && req.query.category !== 'ALL') {
         query.category = req.query.category;
     }
 
-    const products = await Product.find(query).sort({createdAt: -1});
+    if (req.query.excludeCategory) {
+        query.category = { $ne: req.query.excludeCategory };
+    }
+
+    if (req.query.search) {
+        query.$or = [
+            { name: { $regex: req.query.search, $options: 'i' } },
+            { brand: { $regex: req.query.search, $options: 'i' } }
+        ];
+    }
+
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const startIndex = (page - 1) * limit;
+
+    const total = await Product.countDocuments(query);
+    const products = await Product.find(query).sort({createdAt: -1}).skip(startIndex).limit(limit);
 
     res.status(200).json(
-        new ApiResponse(200, products, "Products fetched successfuly")
-    )
-})
+        new ApiResponse(200, {
+            products,
+            pagination: {
+                total,
+                page,
+                pages: Math.ceil(total / limit),
+                limit
+            }
+        }, "Products fetched successfully")
+    );
+});
 
 export const getProductById = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
@@ -61,8 +84,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
 })
 
 export const deleteProduct = asyncHandler(async (req, res) => {
-    //Soft delete; we just mark it is unavailabel
-
     const product = await Product.findByIdAndUpdate(
         req.params.id,
         {isAvailable: false},
