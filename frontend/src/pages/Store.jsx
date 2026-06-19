@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { productService } from '../services/productService';
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,7 +22,7 @@ const Store = () => {
   };
   const categories = Object.keys(categoryMap);
 
-  const { data, isLoading: loading, isError } = useQuery({
+  const { data, isLoading: loading } = useQuery({
     queryKey: ['products', { category: categoryMap[activeCategory], search: searchQuery, page, excludeCategory: 'REPAIR' }],
     queryFn: () => productService.getAllProducts({
       category: categoryMap[activeCategory],
@@ -100,19 +100,6 @@ const Store = () => {
               </div>
             </div>
           ))}
-        </div>
-      ) : isError ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center px-4 bg-red-50 dark:bg-red-900/10 rounded-3xl border border-red-100 dark:border-red-900/30">
-          <h3 className="text-lg font-semibold text-red-600 dark:text-red-400">Failed to load products</h3>
-          <p className="text-sm text-red-500/80 max-w-sm mt-1">
-            We couldn't connect to the server. Please check your internet connection or try again later.
-          </p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="mt-6 text-sm font-medium text-white bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full transition-colors"
-          >
-            Retry
-          </button>
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center px-4 bg-muted/20 rounded-3xl border border-dashed border-border/50">
