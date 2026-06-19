@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { productService } from '../services/productService';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Search, SlidersHorizontal, PackageOpen } from "lucide-react";
 import { useLanguage } from '../components/LanguageProvider';
 import { config } from '../config';
@@ -86,9 +87,21 @@ const Store = () => {
 
       {/* Products Grid */}
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-r-2 border-blue-600"></div>
-          <p className="text-sm text-muted-foreground animate-pulse">{t('store', 'loading')}</p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <Card key={i} className="flex flex-col overflow-hidden border border-border/60 shadow-sm bg-card rounded-2xl h-[340px]">
+              <Skeleton className="w-full h-48 sm:h-56 rounded-none" />
+              <div className="p-3 flex-grow flex flex-col gap-2">
+                <Skeleton className="h-3 w-16" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-full mt-1" />
+                <div className="mt-auto pt-2 flex items-end justify-between">
+                  <Skeleton className="h-5 w-16" />
+                  <Skeleton className="h-4 w-12" />
+                </div>
+              </div>
+            </Card>
+          ))}
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center px-4 bg-muted/20 rounded-3xl border border-dashed border-border/50">

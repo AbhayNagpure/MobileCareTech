@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { logger } from '../utils/logger.js';
 
 export const handleChat = async (req, res) => {
     try {
@@ -38,7 +39,7 @@ Do not provide exact binding quotes, but rough estimates are fine (e.g., iPhone 
         });
 
     } catch (error) {
-        console.error("Chat Error:", error);
+        logger.error(`Chat Error: ${error.message}`, { stack: error.stack });
         return res.status(500).json({ success: false, message: "Failed to communicate with AI", error: error.message });
     }
 };
