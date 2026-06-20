@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Mic, MicOff, Bot, User } from 'lucide-react';
-import axios from 'axios';
+import { apiClient } from '../services/apiClient';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ const ChatBot = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/api/v1/chat/message', { message: userText });
+      const response = await apiClient.post('/chat/message', { message: userText });
       if (response.data.success) {
         setMessages(prev => [...prev, { text: response.data.reply, isBot: true }]);
       }
