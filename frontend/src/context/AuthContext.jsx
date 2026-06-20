@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { apiClient } from '../services/apiClient';
 
-const API_URL = '/api/v1/auth';
+const API_URL = '/auth';
 
 const AuthContext = createContext();
 
@@ -17,9 +17,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(`${API_URL}/me`, {
-          withCredentials: true,
-        });
+        const response = await apiClient.get(`${API_URL}/me`);
         setUser(response.data.data);
       } catch (error) {
         // Cookie expired or doesn't exist — user is not logged in
@@ -33,10 +31,9 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogle = async (accessToken) => {
     try {
-      const response = await axios.post(
+      const response = await apiClient.post(
         `${API_URL}/login`,
-        { googleToken: accessToken },
-        { withCredentials: true }
+        { googleToken: accessToken }
       );
       setUser(response.data.data.user);
     } catch (error) {
@@ -46,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+      await apiClient.post(`${API_URL}/logout`, {});
     } catch (error) {
       console.error('Logout failed:', error);
     }
