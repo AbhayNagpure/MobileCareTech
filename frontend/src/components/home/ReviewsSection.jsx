@@ -21,12 +21,12 @@ const ReviewsSection = () => {
   };
 
   return (
-    <section className="py-20 px-4 bg-slate-50 dark:bg-black/40 border-t border-slate-200 dark:border-white/5 transition-colors duration-300">
+    <section className="py-20 px-4 bg-muted/20 border-t border-border transition-colors duration-300">
       <div className="max-w-6xl mx-auto">
         
         {/* Reviews Grid */}
         <div className="mb-16">
-          <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-10 text-center">
+          <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-10 text-center">
             {t('reviews', 'title')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -36,15 +36,15 @@ const ReviewsSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-white dark:bg-card p-6 rounded-2xl border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-between"
+                className="bg-card p-6 rounded-2xl border border-border shadow-sm flex flex-col justify-between"
               >
                 <div>
                   <div className="flex text-yellow-500 mb-4">
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-500" />)}
                   </div>
-                  <p className="text-slate-700 dark:text-white/80 mb-6 font-medium leading-relaxed">"{fb.text}"</p>
+                  <p className="text-muted-foreground mb-6 font-medium leading-relaxed">"{fb.text}"</p>
                 </div>
-                <div className="font-bold text-sm text-slate-900 dark:text-white">- {fb.name}</div>
+                <div className="font-medium text-sm text-foreground">- {fb.name}</div>
               </motion.div>
             ))}
           </div>
@@ -58,11 +58,11 @@ const ReviewsSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-3 bg-blue-600 dark:bg-blue-900/40 rounded-3xl p-8 md:p-10 text-white flex flex-col justify-center gap-8 shadow-xl shadow-blue-900/10"
+            className="lg:col-span-3 bg-primary rounded-3xl p-8 md:p-10 text-primary-foreground flex flex-col justify-center gap-8 shadow-xl shadow-primary/10"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-2">{t('reviews', 'visitShop')}</h3>
-              <p className="text-blue-100">{t('reviews', 'visitShopDesc')}</p>
+              <h3 className="text-2xl font-semibold mb-2">{t('reviews', 'visitShop')}</h3>
+              <p className="text-primary-foreground/80">{t('reviews', 'visitShopDesc')}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-8 md:gap-10">
@@ -71,7 +71,7 @@ const ReviewsSection = () => {
                   <MapPin className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xs text-blue-200 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'location')}</div>
+                  <div className="text-xs text-primary-foreground/70 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'location')}</div>
                   <div className="font-medium text-sm md:text-base">High School Chowk, Hatta</div>
                 </div>
               </div>
@@ -81,7 +81,7 @@ const ReviewsSection = () => {
                   <Clock className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xs text-blue-200 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'hours')}</div>
+                  <div className="text-xs text-primary-foreground/70 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'hours')}</div>
                   <div className="font-medium text-sm md:text-base">10:00 AM - 7:00 PM</div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ const ReviewsSection = () => {
                   <Phone className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xs text-blue-200 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'callUs')}</div>
+                  <div className="text-xs text-primary-foreground/70 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'callUs')}</div>
                   <div className="font-medium text-sm md:text-base">+91 74770 90100</div>
                 </div>
               </div>
@@ -104,10 +104,10 @@ const ReviewsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="lg:col-span-2 bg-white dark:bg-card rounded-3xl p-8 md:p-10 border border-slate-200 dark:border-white/10 shadow-sm flex flex-col justify-center"
+            className="lg:col-span-2 bg-card rounded-3xl p-8 md:p-10 border border-border shadow-sm flex flex-col justify-center"
           >
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t('reviews', 'leaveReview')}</h3>
-            <p className="text-sm text-slate-500 dark:text-white/50 mb-6">{t('reviews', 'leaveReviewDesc')}</p>
+            <h3 className="text-xl font-semibold text-foreground mb-2">{t('reviews', 'leaveReview')}</h3>
+            <p className="text-sm text-muted-foreground mb-6">{t('reviews', 'leaveReviewDesc')}</p>
             
             <form className="space-y-4" onSubmit={handleFeedbackSubmit}>
               <input 
@@ -116,7 +116,7 @@ const ReviewsSection = () => {
                 value={formData.name} 
                 onChange={e => setFormData({...formData, name: e.target.value})} 
                 placeholder={t('reviews', 'yourName')} 
-                className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" 
+                className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-shadow" 
               />
               <textarea 
                 required 
@@ -124,9 +124,9 @@ const ReviewsSection = () => {
                 onChange={e => setFormData({...formData, message: e.target.value})} 
                 rows="3" 
                 placeholder={t('reviews', 'whatDidYouThink')} 
-                className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-shadow"
+                className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none transition-shadow"
               ></textarea>
-              <Button type="submit" className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-blue-600 dark:hover:bg-blue-400 font-bold py-5 rounded-xl transition-colors shadow-sm text-sm">
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-5 rounded-xl transition-colors shadow-sm text-sm">
                 {t('reviews', 'submitReview')} <Send className="w-4 h-4 ml-2" />
               </Button>
             </form>

@@ -10,8 +10,8 @@ const Footer = () => {
           
           {/* Brand Info */}
           <div>
-            <h3 className="text-lg font-extrabold text-foreground tracking-tight mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 bg-blue-500 rounded-full" />
+            <h3 className="text-lg font-semibold text-foreground tracking-tight mb-3 flex items-center gap-2">
+              <span className="w-2 h-2 bg-primary rounded-full" />
               MCT <span className="text-muted-foreground font-medium text-sm ml-1">(Mobile Care Tech)</span>
             </h3>
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
@@ -21,11 +21,11 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="md:text-right">
-            <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">{t('footer', 'quickLinks')}</h3>
+            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">{t('footer', 'quickLinks')}</h3>
             <ul className="flex flex-col md:items-end gap-2 text-sm text-muted-foreground">
-              <li><Link to="/" className="hover:text-blue-500 transition-colors">{t('footer', 'home')}</Link></li>
-              <li><Link to="/store" className="hover:text-blue-500 transition-colors">{t('footer', 'store')}</Link></li>
-              <li><Link to="/contact" className="hover:text-blue-500 transition-colors">{t('footer', 'contact')}</Link></li>
+              <li><Link to="/" className="hover:text-primary transition-colors">{t('footer', 'home')}</Link></li>
+              <li><Link to="/store" className="hover:text-primary transition-colors">{t('footer', 'store')}</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">{t('footer', 'contact')}</Link></li>
             </ul>
           </div>
 

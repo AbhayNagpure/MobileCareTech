@@ -65,26 +65,26 @@ const ShowcaseSection = () => {
         
         {/* Left Text & Features */}
         <div className="flex flex-col text-center lg:text-left max-w-2xl mx-auto lg:mx-0 order-1 lg:order-2">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 sm:mb-6 tracking-tight flex flex-col gap-1 lg:block">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-4 sm:mb-6 tracking-tight flex flex-col gap-1 lg:block">
             <span>{t('showcase', 'title1')}</span>
-            <span className="text-blue-600 dark:text-blue-400 lg:ml-2">{t('showcase', 'title2')}</span>
+            <span className="text-primary lg:ml-2">{t('showcase', 'title2')}</span>
           </h2>
-          <p className="text-slate-600 dark:text-white/60 text-base sm:text-lg mb-8 lg:mb-10">
+          <p className="text-muted-foreground text-base sm:text-lg mb-8 lg:mb-10">
             {t('showcase', 'subtitle')}
           </p>
           
           <div className="space-y-6 hidden sm:flex flex-col items-center lg:items-start">
             <div className="flex items-start gap-4 text-left max-w-sm">
               <div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{t('showcase', 'highQuality')}</h4>
-                <p className="text-sm text-slate-600 dark:text-white/60 leading-relaxed">{t('showcase', 'highQualityDesc')}</p>
+                <h4 className="text-lg font-semibold text-foreground mb-1">{t('showcase', 'highQuality')}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{t('showcase', 'highQualityDesc')}</p>
               </div>
             </div>
             
             <div className="flex items-start gap-4 text-left max-w-sm">
               <div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{t('showcase', 'fastFix')}</h4>
-                <p className="text-sm text-slate-600 dark:text-white/60 leading-relaxed">{t('showcase', 'fastFixDesc')}</p>
+                <h4 className="text-lg font-semibold text-foreground mb-1">{t('showcase', 'fastFix')}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{t('showcase', 'fastFixDesc')}</p>
               </div>
             </div>
           </div>
@@ -96,22 +96,22 @@ const ShowcaseSection = () => {
             initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="bg-white dark:bg-card border border-slate-200 dark:border-white/10 rounded-lg p-4 sm:p-6 shadow-sm"
+            className="bg-card border border-border rounded-lg p-4 sm:p-6 shadow-sm"
           >
             <div className="mb-4">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{displayRepairs[activeSlide].title}</h3>
-              <p className="text-sm text-slate-600 dark:text-white/60">{t('showcase', 'fixed')}: {displayRepairs[activeSlide].issue}</p>
+              <h3 className="text-xl font-semibold text-foreground">{displayRepairs[activeSlide].title}</h3>
+              <p className="text-sm text-muted-foreground">{t('showcase', 'fixed')}: {displayRepairs[activeSlide].issue}</p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <div className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{t('showcase', 'before')}</div>
-                <img src={displayRepairs[activeSlide].before} alt="Before Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded border border-slate-200 dark:border-white/10" />
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{t('showcase', 'before')}</div>
+                <img src={displayRepairs[activeSlide].before} alt="Before Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded border border-border" />
               </div>
               
               <div className="flex flex-col gap-2">
-                <div className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{t('showcase', 'after')}</div>
-                <img src={displayRepairs[activeSlide].after} alt="After Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded border border-slate-200 dark:border-white/10" />
+                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{t('showcase', 'after')}</div>
+                <img src={displayRepairs[activeSlide].after} alt="After Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded border border-border" />
               </div>
             </div>
           </motion.div>
@@ -122,7 +122,7 @@ const ShowcaseSection = () => {
               <button 
                 key={dot}
                 onClick={() => setActiveSlide(dot)}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${activeSlide === dot ? 'bg-blue-600' : 'bg-slate-300 dark:bg-slate-700'}`}
+                className={`w-2.5 h-2.5 rounded-full transition-colors ${activeSlide === dot ? 'bg-primary' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'}`}
               />
             ))}
           </div>

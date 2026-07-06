@@ -43,7 +43,7 @@ const DesktopNav = ({ navLinks }) => {
           {/* Left: Logo */}
           <Link to="/" className="flex items-center group">
             <span
-              className="font-black italic text-3xl tracking-tighter text-blue-600 dark:text-blue-400 transition-transform group-hover:scale-105"
+              className="font-black italic text-3xl tracking-tighter text-primary transition-transform group-hover:scale-105"
               style={{ transform: 'skewX(-8deg)' }}
             >
               MCT
@@ -62,9 +62,9 @@ const DesktopNav = ({ navLinks }) => {
                     key={link.path}
                     to={link.path}
                     className={`
-                      flex items-center gap-2 px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200
+                      flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium transition-all duration-200
                       ${isActive
-                        ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10'
+                        ? 'text-primary bg-primary/10'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                       }
                     `}
@@ -100,7 +100,7 @@ const DesktopNav = ({ navLinks }) => {
                       className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-muted/50 transition-colors"
                     >
                       <span className="text-sm font-medium text-foreground">Dark Mode</span>
-                      <div className={`w-10 h-5 rounded-full p-0.5 transition-colors ${theme === 'dark' ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-700'}`}>
+                      <div className={`w-10 h-5 rounded-full p-0.5 transition-colors ${theme === 'dark' ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-700'}`}>
                         <div className={`w-4 h-4 rounded-full bg-white transition-transform ${theme === 'dark' ? 'translate-x-5' : 'translate-x-0'}`} />
                       </div>
                     </button>
@@ -114,7 +114,7 @@ const DesktopNav = ({ navLinks }) => {
                       className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-muted/50 transition-colors"
                     >
                       <span className="text-sm font-medium text-foreground">Language</span>
-                      <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-md">
+                      <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-1 rounded-md">
                         {language === 'en' ? 'EN' : 'HI'}
                       </span>
                     </button>
@@ -131,11 +131,11 @@ const DesktopNav = ({ navLinks }) => {
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-1.5 md:gap-2 rounded-full pl-1 pr-1 md:pr-2 py-1 hover:bg-muted/60 transition-all"
                 >
-                  <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-blue-500/40">
+                  <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary/40">
                     {user.avatar ? (
                       <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                      <div className="w-full h-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm">
                         {user.name?.charAt(0) || 'U'}
                       </div>
                     )}
@@ -147,11 +147,11 @@ const DesktopNav = ({ navLinks }) => {
                   <div className="absolute right-0 top-full mt-2 w-60 bg-background border border-border rounded-xl shadow-2xl shadow-black/10 dark:shadow-black/30 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                     <div className="px-4 py-3 bg-muted/30">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-blue-500/30 flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/30 flex-shrink-0">
                           {user.avatar ? (
                             <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                           ) : (
-                            <div className="w-full h-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                            <div className="w-full h-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
                               {user.name?.charAt(0) || 'U'}
                             </div>
                           )}
@@ -165,7 +165,7 @@ const DesktopNav = ({ navLinks }) => {
                     <div className="p-1.5">
                       <button
                         onMouseDown={async (e) => { e.stopPropagation(); await logout(); setShowDropdown(false); }}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Logout
@@ -177,7 +177,7 @@ const DesktopNav = ({ navLinks }) => {
             ) : (
               <button
                 onClick={handleGoogleSignIn}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-sm font-medium transition-all hover:shadow-lg hover:shadow-blue-500/20 active:scale-95"
+                className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-sm font-medium transition-all hover:shadow-lg hover:shadow-primary/20 active:scale-95"
               >
                 Sign In
               </button>

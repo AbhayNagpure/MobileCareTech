@@ -17,7 +17,7 @@ export const GameOverScreen = ({ score, highScore, onRestart }) => {
         </div>
       </div>
 
-      <Button onClick={(e) => { e.stopPropagation(); onRestart(); }} variant="outline" className="rounded-full px-8">
+      <Button onPointerDown={(e) => { e.stopPropagation(); onRestart(); }} variant="outline" className="rounded-full px-8">
         Try Again
       </Button>
     </div>
