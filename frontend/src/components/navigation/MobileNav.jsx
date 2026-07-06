@@ -15,11 +15,11 @@ const MobileNav = ({ navLinks }) => {
               to={link.path}
               className={`
                 flex-1 flex flex-col items-center justify-center h-full gap-1 transition-colors
-                ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-muted-foreground'}
+                ${isActive ? 'text-primary' : 'text-muted-foreground'}
               `}
             >
               {link.icon}
-              <span className="text-xs font-semibold">{link.name}</span>
+              <span className="text-xs font-medium">{link.name}</span>
             </Link>
           );
         })}
