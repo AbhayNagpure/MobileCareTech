@@ -83,8 +83,13 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
-
+      {/* Premium Tech Bottom Border Design */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/4 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent blur-[2px]"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-[1px] bg-primary shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+        <div className="absolute bottom-[-3px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_10px_rgba(59,130,246,1)]"></div>
+      </div>
 
     </section>
   );

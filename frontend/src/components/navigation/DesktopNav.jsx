@@ -40,10 +40,9 @@ const DesktopNav = ({ navLinks }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
 
-          {/* Left: Logo */}
           <Link to="/" className="flex items-center group">
             <span
-              className="font-semibold text-lg tracking-tight text-primary transition-colors hover:text-foreground"
+              className="font-semibold text-lg tracking-tight text-foreground transition-colors"
             >
               MobileCareTech
             </span>
@@ -63,8 +62,8 @@ const DesktopNav = ({ navLinks }) => {
                     className={`
                       relative flex items-center h-14 px-4 text-sm font-medium transition-colors
                       ${isActive
-                        ? 'text-primary'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? 'text-foreground'
+                        : 'text-foreground/80 hover:text-foreground'
                       }
                     `}
                   >
