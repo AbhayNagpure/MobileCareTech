@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useGoogleLogin } from '@react-oauth/google';
-import { LogOut, ChevronDown, MoreVertical } from 'lucide-react';
+import { LogOut, ChevronDown, MoreVertical, Phone } from 'lucide-react';
 import { useTheme } from '../ThemeProvider';
 import { useLanguage } from '../LanguageProvider';
 
@@ -36,17 +36,16 @@ const DesktopNav = ({ navLinks }) => {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/70 backdrop-blur-xl border-b border-border/50">
+    <nav className="sticky top-0 z-50 bg-background border-b border-border/40 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-14">
 
           {/* Left: Logo */}
           <Link to="/" className="flex items-center group">
             <span
-              className="font-black italic text-3xl tracking-tighter text-primary transition-transform group-hover:scale-105"
-              style={{ transform: 'skewX(-8deg)' }}
+              className="font-semibold text-lg tracking-tight text-primary transition-colors hover:text-foreground"
             >
-              MCT
+              MobileCareTech
             </span>
           </Link>
 
@@ -62,21 +61,29 @@ const DesktopNav = ({ navLinks }) => {
                     key={link.path}
                     to={link.path}
                     className={`
-                      flex items-center gap-2 px-4 py-2 rounded-lg text-base font-medium transition-all duration-200
+                      relative flex items-center h-14 px-4 text-sm font-medium transition-colors
                       ${isActive
-                        ? 'text-primary bg-primary/10'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        ? 'text-primary'
+                        : 'text-muted-foreground hover:text-foreground'
                       }
                     `}
                   >
-                    {link.icon}
                     {link.name}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-4 right-4 h-[3px] rounded-t-md bg-primary" />
+                    )}
                   </Link>
                 );
               })}
             </div>
 
-            <div className="hidden md:block w-px h-5 bg-border/60 mx-1" />
+            <div className="hidden md:flex items-center">
+              <a href="tel:+917477090100" className="flex items-center gap-2 px-4 py-2 rounded-full border border-border/60 text-foreground hover:bg-muted/50 transition-colors mr-2">
+                <Phone className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium tracking-wide">+91 74770-90100</span>
+              </a>
+              <div className="w-px h-5 bg-border/60 mx-1" />
+            </div>
 
             {/* 3-dot menu for Theme & Language */}
             <div className="relative" ref={menuRef}>
