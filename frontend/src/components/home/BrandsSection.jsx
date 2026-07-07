@@ -1,15 +1,25 @@
 import React from 'react';
 
+import appleImg from '../../assets/apple.jpg';
+import samsungImg from '../../assets/samsung.jpg';
+import oneplusImg from '../../assets/oneplus.webp';
+import nothingImg from '../../assets/nothing.jpg';
+import googleImg from '../../assets/google.jpg';
+import motorolaImg from '../../assets/motorola.jpg';
+import oppoImg from '../../assets/oppo.webp';
+import vivoImg from '../../assets/vivo.jpg';
+import realmeImg from '../../assets/realme.webp';
+
 const brands = [
-  { name: 'Apple', icon: '🍎' },
-  { name: 'Samsung', icon: '📱' },
-  { name: 'OnePlus', icon: '📱' },
-  { name: 'Nothing', icon: '📱' },
-  { name: 'Google', icon: '📱' },
-  { name: 'Motorola', icon: '📱' },
-  { name: 'Oppo', icon: '📱' },
-  { name: 'Vivo', icon: '📱' },
-  { name: 'Realme', icon: '📱' },
+  { name: 'Apple', icon: appleImg },
+  { name: 'Samsung', icon: samsungImg },
+  { name: 'OnePlus', icon: oneplusImg },
+  { name: 'Nothing', icon: nothingImg },
+  { name: 'Google', icon: googleImg },
+  { name: 'Motorola', icon: motorolaImg },
+  { name: 'Oppo', icon: oppoImg },
+  { name: 'Vivo', icon: vivoImg },
+  { name: 'Realme', icon: realmeImg },
 ];
 
 const BrandsSection = () => {
@@ -24,14 +34,16 @@ const BrandsSection = () => {
           We service all major smartphone and device brands at the chip level.
         </p>
 
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-9 gap-4">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-9 gap-6">
           {brands.map((brand) => (
             <div
               key={brand.name}
-              className="flex flex-col items-center justify-center gap-3 py-6 px-3 border border-border rounded hover:border-primary/40 hover:bg-primary/5 transition-colors cursor-default"
+              className="flex flex-col items-center justify-center gap-4 py-4 px-2 transition-transform hover:scale-105 cursor-default"
             >
-              <span className="text-2xl">{brand.icon}</span>
-              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 tracking-wide">
+              <div className="w-24 h-24 flex items-center justify-center">
+                <img src={brand.icon} alt={brand.name} className="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal" />
+              </div>
+              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 tracking-wide">
                 {brand.name}
               </span>
             </div>
