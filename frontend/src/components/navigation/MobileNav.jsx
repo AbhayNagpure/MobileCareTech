@@ -15,7 +15,7 @@ const MobileNav = ({ navLinks }) => {
               to={link.path}
               className={`
                 relative flex-1 flex flex-col items-center justify-center h-full gap-1 transition-colors
-                ${isActive ? 'text-primary' : 'text-muted-foreground'}
+                ${isActive ? 'text-foreground' : 'text-foreground/80 hover:text-foreground'}
               `}
             >
               {isActive && (
