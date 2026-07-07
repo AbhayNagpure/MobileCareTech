@@ -33,9 +33,9 @@ const ReviewsSection = () => {
             {feedbacks.slice(0, 3).map((fb, idx) => (
               <motion.div 
                 key={fb.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: idx * 0.1 }}
                 className="bg-card p-6 rounded-2xl border border-border shadow-sm flex flex-col justify-between"
               >
                 <div>
@@ -55,44 +55,45 @@ const ReviewsSection = () => {
           
           {/* Store Info */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="lg:col-span-3 bg-primary rounded-3xl p-8 md:p-10 text-primary-foreground flex flex-col justify-center gap-8 shadow-xl shadow-primary/10"
+            transition={{ duration: 0.3 }}
+            className="lg:col-span-3 bg-card border border-border rounded-3xl p-8 md:p-10 text-foreground flex flex-col justify-center gap-8 shadow-sm"
           >
             <div>
               <h3 className="text-2xl font-semibold mb-2">{t('reviews', 'visitShop')}</h3>
-              <p className="text-primary-foreground/80">{t('reviews', 'visitShopDesc')}</p>
+              <p className="text-muted-foreground">{t('reviews', 'visitShopDesc')}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-8 md:gap-10">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xs text-primary-foreground/70 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'location')}</div>
-                  <div className="font-medium text-sm md:text-base">High School Chowk, Hatta</div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'location')}</div>
+                  <div className="font-medium text-sm md:text-base text-foreground">High School Chowk, Hatta</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-6 h-6 text-primary" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xs text-primary-foreground/70 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'hours')}</div>
-                  <div className="font-medium text-sm md:text-base">10:00 AM - 7:00 PM</div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'hours')}</div>
+                  <div className="font-medium text-sm md:text-base text-foreground">10:00 AM - 7:00 PM</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-6 h-6 text-primary" />
                 </div>
                 <div className="text-left">
-                  <div className="text-xs text-primary-foreground/70 uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'callUs')}</div>
-                  <div className="font-medium text-sm md:text-base">+91 74770 90100</div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">{t('reviews', 'callUs')}</div>
+                  <div className="font-medium text-sm md:text-base text-foreground">+91 74770 90100</div>
                 </div>
               </div>
             </div>
@@ -100,10 +101,10 @@ const ReviewsSection = () => {
 
           {/* Leave a Review Form */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="lg:col-span-2 bg-card rounded-3xl p-8 md:p-10 border border-border shadow-sm flex flex-col justify-center"
           >
             <h3 className="text-xl font-semibold text-foreground mb-2">{t('reviews', 'leaveReview')}</h3>

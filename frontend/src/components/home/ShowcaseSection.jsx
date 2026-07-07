@@ -93,25 +93,25 @@ const ShowcaseSection = () => {
         <div className="w-full order-2 lg:order-1 flex flex-col gap-4">
           <motion.div 
             key={activeSlide}
-            initial={{ opacity: 0.2 }}
+            initial={{ opacity: 0.8 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="bg-card border border-border rounded-lg p-4 sm:p-6 shadow-sm"
+            transition={{ duration: 0.2 }}
+            className="bg-card border border-border rounded-xl p-6 sm:p-8 shadow-sm"
           >
             <div className="mb-4">
               <h3 className="text-xl font-semibold text-foreground">{displayRepairs[activeSlide].title}</h3>
               <p className="text-sm text-muted-foreground">{t('showcase', 'fixed')}: {displayRepairs[activeSlide].issue}</p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{t('showcase', 'before')}</div>
-                <img src={displayRepairs[activeSlide].before} alt="Before Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded border border-border" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="flex flex-col gap-3">
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('showcase', 'before')}</div>
+                <img src={displayRepairs[activeSlide].before} alt="Before Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded-xl" />
               </div>
               
-              <div className="flex flex-col gap-2">
-                <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{t('showcase', 'after')}</div>
-                <img src={displayRepairs[activeSlide].after} alt="After Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded border border-border" />
+              <div className="flex flex-col gap-3">
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('showcase', 'after')}</div>
+                <img src={displayRepairs[activeSlide].after} alt="After Repair" className="w-full h-[200px] sm:h-[250px] object-cover rounded-xl" />
               </div>
             </div>
           </motion.div>
