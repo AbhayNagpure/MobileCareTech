@@ -15,9 +15,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
     
     if (req.query.category && req.query.category !== 'ALL') {
         query.category = req.query.category;
-    }
-
-    if (req.query.excludeCategory) {
+    } else if (req.query.excludeCategory) {
         query.category = { $ne: req.query.excludeCategory };
     }
 

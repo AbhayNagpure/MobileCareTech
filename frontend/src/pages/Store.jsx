@@ -87,15 +87,14 @@ const Store = () => {
       {loading ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="flex flex-col overflow-hidden shadow-sm bg-card rounded-[2rem] h-[340px]">
-              <Skeleton className="w-full h-48 sm:h-56 rounded-none" />
-              <div className="p-5 flex-grow flex flex-col gap-2">
-                <Skeleton className="h-3 w-16" />
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-3 w-full mt-1" />
-                <div className="mt-auto pt-2 flex items-end justify-between">
-                  <Skeleton className="h-5 w-16" />
-                  <Skeleton className="h-4 w-12" />
+            <div key={i} className="flex flex-col overflow-hidden shadow-sm bg-card rounded-lg h-[280px] border border-slate-200 dark:border-slate-700">
+              <Skeleton className="w-full h-40 sm:h-48 rounded-none" />
+              <div className="p-4 flex-grow flex flex-col gap-2">
+                <Skeleton className="h-2.5 w-16 mb-1" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+                <div className="mt-auto pt-2">
+                  <Skeleton className="h-5 w-20" />
                 </div>
               </div>
             </div>
