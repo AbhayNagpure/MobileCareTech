@@ -40,7 +40,8 @@ const DesktopNav = ({ navLinks }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
 
-          <Link to="/" className="flex items-center group">
+          <Link to="/" className="flex items-center gap-2 group">
+            <img src="/logo.png" alt="MCT Logo" className="w-8 h-8 rounded-full shadow-sm object-cover" />
             <span
               className="font-semibold text-lg tracking-tight text-foreground transition-colors"
             >
